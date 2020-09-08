@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.mycompany</groupId>
+	<artifactId>cicdmuledemo</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>mule-application</packaging>
+
+	<name>cicdmuledemo</name>
+
+    <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<app.runtime>4.2.2-hf2</app.runtime>
+		<mule.maven.plugin.version>3.3.5</mule.maven.plugin.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<version>${mule.maven.plugin.version}</version>
+				<extensions>true</extensions>
+	
+<!-- CloudHu Configuration Starts here -->
+				<configuration>
+				<cloudHubDeployment>
+		            <uri>https://anypoint.mulesoft.com</uri>
+		            <muleVersion>${mule.version}</muleVersion>
+		            <username>${anypoint.username}</username>
+		            <password>${anypoint.password}</password>
+		            <applicationName>${anypoint.applicationName}</applicationName>
+		            <environment>${anypoint.environment}</environment>
+		         	<workerType>${anypoint.workertype}</workerType>
+            		<workers>${anypoint.noworkers}</workers>
+		            <businessGroup>${anypoint.businessGroup}</businessGroup>
+		            <objectStoreV2>true</objectStoreV2>
+		            <properties>
+		                <key>value</key>
+		            </properties>
+		        </cloudHubDeployment>
+		       </configuration>
+		
+			<executions>
+               <execution>
+                  <id>deploy</id>
+                  <phase>deploy</phase>
+                  <goals>
+                     <goal>deploy</goal>
+                  </goals>
+               <configuration>
+                            <classifier>mule-application</classifier>
+                        </configuration>
+                    </execution>
+            </executions>
+<!-- CloudHu Configuration end here -->
+
+			</plugin>
+		 <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+               <skip>true</skip>
+            </configuration>
+         </plugin>
+		         <!-- Read property file -->
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>properties-maven-plugin</artifactId>
+            <version>1.0.0</version>
+            <executions>
+               <execution>
+                  <phase>initialize</phase>
+                  <goals>
+                     <goal>read-project-properties</goal>
+                  </goals>
+                  <configuration>
+                     <files>
+                        <file>src/main/resources/mule.properties</file>
+                     </files>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+
+		</plugins>
+	</build>
+
+	<dependencies>
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-http-connector</artifactId>
+            <version>1.5.6</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-sockets-connector</artifactId>
+            <version>1.1.5</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+	</dependencies>
+
+	<repositories>
+          <repository>
+            <id>anypoint-exchange</id>
+            <name>Anypoint Exchange</name>
+            <url>https://maven.anypoint.mulesoft.com/api/v1/maven</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
+            <url>https://repository.mulesoft.org/releases/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mulesoft-releases</id>
+            <name>mulesoft release repository</name>
+            <layout>default</layout>
+            <url>https://repository.mulesoft.org/releases/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+
+    </pluginRepositories>
+
+</project>

@@ -38,6 +38,7 @@
             		<workers>${anypoint.noworkers}</workers>
 		            <businessGroup>${anypoint.businessGroup}</businessGroup>
 		            <objectStoreV2>true</objectStoreV2>
+		            <region>au-s1</region>
 		            <properties>
 		                <key>value</key>
 		            </properties>

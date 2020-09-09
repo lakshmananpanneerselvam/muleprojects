@@ -38,6 +38,7 @@
             		<workers>${anypoint.noworkers}</workers>
 		            <businessGroup>${anypoint.businessGroup}</businessGroup>
 		            <objectStoreV2>true</objectStoreV2>
+		            
 		            <properties>
 		                <key>value</key>
 		            </properties>

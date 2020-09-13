@@ -9,6 +9,6 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	</http:listener-config>
 	<flow name="cicdmuledemoFlow" doc:id="6567fecf-f549-4244-afff-15f840da36e2" >
 		<http:listener doc:name="Listener" doc:id="40918d24-ee4a-486b-a703-06e3a4974ef1" config-ref="HTTP_Listener_config" path="/sawcicd"/>
-		<set-payload value="{  Hellow SA Water Welcome to Mule Platform . Mule is great }" doc:name="Set Payload" doc:id="48252c9a-fb1b-4d41-b9da-29d04f00b997" />
+		<set-payload value="{  Hellow SA Water Welcome to Mule Platform . Mule is great - localhost sytem }" doc:name="Set Payload" doc:id="48252c9a-fb1b-4d41-b9da-29d04f00b997" />
 	</flow>
 </mule>

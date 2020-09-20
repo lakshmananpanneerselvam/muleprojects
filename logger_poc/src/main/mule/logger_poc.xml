@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9161baba-8820-431e-8098-515a6f020308" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="logger_pocFlow" doc:id="585f194d-5b6a-4ba6-84c6-32b9918a4a57" >
+		<http:listener doc:name="Listener" doc:id="aab5cf42-7e0d-4632-8cd5-1b9f5bd2d001" config-ref="HTTP_Listener_config" path="/logtest"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="13f57e36-bb07-47df-877c-1c1d31439467" />
+		<logger level="INFO" doc:name="Logger info" doc:id="0a9c48ea-f88b-4242-905c-98ee3cc5822a" message="This is info log"/>
+		<logger level="DEBUG" doc:name="Logger - Debug" doc:id="2010722d-8236-497f-8d67-85195565f7c3" message="This debug log"/>
+	</flow>
+</mule>

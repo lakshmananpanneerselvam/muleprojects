@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="2b12c4d8-cb5a-4865-aa7c-e02afd48b4cd" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<jms:config name="JMS_Config" doc:name="JMS Config" doc:id="d0c97581-2db7-4352-9009-41ff4a250a46" >
+		<jms:active-mq-connection username="admin" password="admin">
+			<jms:factory-configuration brokerUrl="tcp://localhost:61616" />
+		</jms:active-mq-connection>
+	</jms:config>
+	<flow name="mule-activemq-pocFlow-publish" doc:id="cf041e5b-6c3b-4967-93ca-b5f689508d6f" >
+		<http:listener doc:name="Listener-jms-publisher-mq" doc:id="71972357-87ee-4dfd-9799-5f387da8fa22" config-ref="HTTP_Listener_config" path="/publish"/>
+		<jms:publish doc:name="Publish data to Active-MQ" doc:id="ac4e0953-baf5-4dfe-bf4e-f03f0301f69d" config-ref="JMS_Config" destination="Mulesoft" sendCorrelationId="ALWAYS">
+			<jms:message outboundContentType="application/jsons" >
+				<jms:jmsx-properties />
+			</jms:message>
+		</jms:publish>
+		<logger level="INFO" doc:name="logger MQ publish" doc:id="23a30d1e-d879-46df-a37c-737f2fe58b07" message="#[payload]"/>
+	</flow>
+	<flow name="mule-activemq-pocFlow-Consume" doc:id="0faf1631-8f51-474c-9906-3ad7c26166e3" >
+		<http:listener doc:name="Listener consumer MQ" doc:id="2b787150-6f79-4a93-b1d3-6c7be14bd507" config-ref="HTTP_Listener_config" path="/consume"/>
+		<jms:consume doc:name="Consume Active MQ" doc:id="c5f8ced9-2a5a-429f-adf8-88c13f8094a0" config-ref="JMS_Config" destination="Mulesoft" contentType="application/json" maximumWait="2" maximumWaitUnit="MINUTES"/>
+		<logger level="INFO" doc:name="Logger consumer" doc:id="cc938003-ac0b-4aa4-abe7-82c086cab91b" message='#[payload]'/>
+	</flow>
+</mule>
